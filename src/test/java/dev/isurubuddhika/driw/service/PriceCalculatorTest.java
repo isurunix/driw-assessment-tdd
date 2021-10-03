@@ -66,6 +66,17 @@ public class PriceCalculatorTest {
         assertEquals(825 + (3*825*1.3),priceCalculatorService.calculatePrice(2, 8).getPrice());
     }
 
+    @Test
+    @DisplayName("test_get_price_list_for_item")
+    public void getPriceList() {
+        Item penguinEars = new Item(1L,"Penguin-Ears",175d, 20);
+        Item horseshoe = new Item(2L,"Horseshoe",825d, 5);
+        itemRepository.save(penguinEars);
+        itemRepository.save(horseshoe);
+
+        assertEquals(50, priceCalculatorService.getPriceList(1).size());
+    }
+
     @AfterEach
     public void tearDown() {
         itemRepository.deleteAll();

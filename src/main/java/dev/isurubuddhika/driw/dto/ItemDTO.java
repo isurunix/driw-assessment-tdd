@@ -9,7 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Item {
+public class ItemDTO {
+    private long id;
     private String name;
     private double cartonPrice;
     private int unitsPerCarton;

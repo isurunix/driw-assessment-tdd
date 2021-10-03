@@ -1,16 +1,17 @@
 package dev.isurubuddhika.driw.service.impl;
 
+import dev.isurubuddhika.driw.dto.ItemDTO;
 import dev.isurubuddhika.driw.dto.ItemPrice;
 import dev.isurubuddhika.driw.entity.Item;
 import dev.isurubuddhika.driw.exception.ItemNotFountException;
 import dev.isurubuddhika.driw.repository.ItemRepository;
 import dev.isurubuddhika.driw.service.PriceCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class PriceCalculator implements PriceCalculatorService {
@@ -30,7 +31,7 @@ public class PriceCalculator implements PriceCalculatorService {
         double price = 0;
         if (qty < item.getItemsPerCarton()) {
             price = 1.3 * item.getPricePerCarton() * qty;
-        } else if(qty == item.getItemsPerCarton()) {
+        } else if (qty == item.getItemsPerCarton()) {
             price = item.getPricePerCarton();
         } else if (qty > item.getItemsPerCarton()) {
             int noOfCartons = qty / item.getItemsPerCarton();
@@ -51,6 +52,11 @@ public class PriceCalculator implements PriceCalculatorService {
 
     @Override
     public List<ItemPrice> getPriceList(int itemId) {
-        return null;
+        List<ItemPrice> priceList = new ArrayList<>();
+        Item item = itemRepository.findById((long) itemId).orElseThrow(() -> new ItemNotFountException(itemId));
+        for (int i=1; i<=50; i++) {
+            priceList.add(new ItemPrice(itemId, i, calculatePrice(itemId, i).getPrice()));
+        }
+        return priceList;
     }
 }
