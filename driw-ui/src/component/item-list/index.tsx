@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ItemCard from "../item-card";
 
-interface Item {
+export  interface Item {
   id: number;
   name: string;
   cartonPrice: number;

@@ -8,7 +8,7 @@ interface PriceTableProps {
   location: any;
 }
 
-interface ItemPrice {
+export interface ItemPrice {
   itemId: number;
   quantity: number;
   price: number;
